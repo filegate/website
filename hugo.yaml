@@ -1,0 +1,86 @@
+baseURL: https://file-gate.org/
+locale: en-us
+title: IFDC FileGate Project
+
+module:
+  imports:
+    - path: github.com/imfing/hextra
+
+enableGitInfo: true
+
+params:
+  # Display the last modification date
+  displayUpdatedDate: true
+  dateFormat: "January 2, 2006"
+  # Display the author of the last modification
+  displayUpdatedAuthor: true
+  externalLinkDecoration: true
+
+  banner:
+    key: 'announcement'
+    message: |
+      🎉 Welcome! The FileGate site is being rebuilt, it shouldnt take long.
+
+  theme:
+    # light | dark | system
+    default: system
+    displayToggle: true
+
+  navbar:
+    displayTitle: true
+    displayLogo: true
+    logo:
+      path: images/logo.svg
+      dark: images/logo-dark.svg
+      link: /
+      width: 40
+      height: 20
+
+  page:
+    # full (100%), wide (90rem), normal (1280px)
+    width: full
+
+    displayPagination: true  # for docs pages
+    list:
+      displayTags: true
+
+  news:
+    article:
+      displayPagination: true  # for blog articles
+    list:
+      displayTags: true
+      pageSize: 10
+
+menu:
+  sidebar:
+    - name: Fido Links
+      params:
+        type: separator
+      weight: 1
+    - name: "Fidonet ↗"
+      url: "https://fidonet.org"
+      weight: 2
+    - name: "FTSC ↗"
+      url: "https://ftsc.org"
+      weight: 3
+    - name: "Zone 1 ↗"
+      url: "http://www.darkrealms.ca/"
+      weight: 4
+    - name: "Zone 3 ↗"
+      url: "http://fidonet.au"
+      weight: 4
+    - name: "Zone 4 ↗"
+      url: "https://fido.bbs.docksud.com.ar/"
+      weight: 4
+
+  main:
+    - name: News
+      pageRef: /news
+      weight: 1
+    - name: About
+      pageRef: /about
+      weight: 2
+    - name: Search
+      weight: 3
+      params:
+        type: search
