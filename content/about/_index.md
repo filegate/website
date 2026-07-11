@@ -1,6 +1,6 @@
 ---
 date: '2026-07-10T23:20:05+10:00'
-draft: true
+draft: false
 title: 'About'
 ---
 The FidoNet FileGate (often organized as the IFDC FileGate Project) is the file distribution network of the historical Bulletin Board System (BBS) era.

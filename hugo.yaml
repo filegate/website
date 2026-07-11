@@ -60,6 +60,9 @@ menu:
     - name: "Fidonet ↗"
       url: "https://fidonet.org"
       weight: 2
+    - name: "Fidonews ↗"
+      url: "https://www.fidonews.site"
+      weight: 3
     - name: "FTSC ↗"
       url: "https://ftsc.org"
       weight: 3
