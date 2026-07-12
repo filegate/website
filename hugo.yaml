@@ -58,20 +58,20 @@ menu:
         type: separator
       weight: 1
     - name: "Fidonet ↗"
-      url: "https://fidonet.org"
+      url: "https://www.fidonet.org"
       weight: 2
     - name: "Fidonews ↗"
       url: "https://www.fidonews.site"
       weight: 3
     - name: "FTSC ↗"
-      url: "https://ftsc.org"
+      url: "http://ftsc.org"
       weight: 3
     - name: "Zone 1 ↗"
       url: "http://www.darkrealms.ca/"
       weight: 4
-    - name: "Zone 3 ↗"
-      url: "http://fidonet.au"
-      weight: 4
+    # name: "Zone 3 ↗"
+    # url: "http://fidonet.au"
+    # weight: 4
     - name: "Zone 4 ↗"
       url: "https://fido.bbs.docksud.com.ar/"
       weight: 4
