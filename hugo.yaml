@@ -66,12 +66,15 @@ menu:
     - name: "FTSC ↗"
       url: "http://ftsc.org"
       weight: 3
+    - name: "Nodelist ↗"
+      url: "http://nodelist.fidonet.cc"
+      weight: 3
     - name: "Zone 1 ↗"
       url: "http://www.darkrealms.ca/"
       weight: 4
-    # name: "Zone 3 ↗"
-    # url: "http://fidonet.au"
-    # weight: 4
+    - name: "Zone 3 ↗"
+      url: "https://fidonet.au"
+      weight: 4
     - name: "Zone 4 ↗"
       url: "https://fido.bbs.docksud.com.ar/"
       weight: 4
