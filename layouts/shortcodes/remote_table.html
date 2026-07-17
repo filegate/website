@@ -1,0 +1,69 @@
+<div id="table-container">
+    <p id="loading-msg">Fetching remote data...</p>
+    <table id="remote-areas-table" style="display: none; width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>Distribution</th>
+                <th>Filearea</th>
+                <th>Description</th>
+                <th>Files Count</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+    </table>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded',function() {
+    //const apiUrl = "http://docker.local/api/filegate/fidonet"; // Replace with your remote API URL
+    const apiUrl = "{{ .Get "apiurl" }}"
+    const target = "{{ .Get "target" }}"
+
+    fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = ""; // Clear existing rows
+
+		if (target === 'remote-areas-table') {
+            // Iterate through the remote data (adjust property names to match your API)
+            data.forEach(item => {
+                const row = document.createElement('tr');
+
+                const cell1 = document.createElement('td');
+                cell1.textContent = item.filegate;
+                row.appendChild(cell1);
+
+                const cell2 = document.createElement('td');
+                cell2.textContent = item.area;
+                row.appendChild(cell2);
+
+                const cell3 = document.createElement('td');
+                cell3.textContent = item.description;
+                row.appendChild(cell3);
+
+                const cell4 = document.createElement('td');
+                cell4.style.textAlign = "right";
+                cell4.textContent = item.files;
+                row.appendChild(cell4);
+
+                tbody.appendChild(row);
+            });
+}
+
+            // Hide loading message and show table
+            document.getElementById("loading-msg").style.display = "none";
+            document.getElementById(target).style.display = "table";
+        })
+        .catch(error => {
+            document.getElementById("loading-msg").textContent = "Error loading data.";
+            console.error("Error fetching data:", error);
+        });
+});
+</script>

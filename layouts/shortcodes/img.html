@@ -1,5 +1,23 @@
-<img src="{{ .Get "src" }}" 
-     alt="{{ .Get "alt" }}" 
-     style="float: {{ .Get "float" | default "none" }}; 
-            width: {{ .Get "width" | default "auto" }}; 
-            margin: 15px;" />
+{{ $src := .Get "src" }}
+{{ $src_dark := .Get "src_dark" }}
+{{ $alt := .Get "alt" }}
+{{ $float := .Get "float" | default "none" }}
+{{ $width := .Get "width" | default "auto" }}
+
+<span class="hextra-custom-img-wrapper" style="float: {{ $float }}; width: {{ $width }}; margin: 15px; display: inline-block;">
+  {{ if $src_dark }}
+    <!-- Style override specifically targeting Hextra's dark mode states -->
+    <style>
+      .hextra-custom-img-wrapper .img-dark { display: none; }
+      .hextra-custom-img-wrapper .img-light { display: block; }
+      
+      html.dark .hextra-custom-img-wrapper .img-dark { display: block; }
+      html.dark .hextra-custom-img-wrapper .img-light { display: none; }
+    </style>
+
+    <img src="{{ $src }}" alt="{{ $alt }}" class="img-light" style="width: 100%; height: auto;" />
+    <img src="{{ $src_dark }}" alt="{{ $alt }}" class="img-dark" style="width: 100%; height: auto;" />
+  {{ else }}
+    <img src="{{ $src }}" alt="{{ $alt }}" style="width: 100%; height: auto;" />
+  {{ end }}
+</span>

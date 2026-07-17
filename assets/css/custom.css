@@ -1,0 +1,7 @@
+@import url('https://googleapis.com');
+
+/* Apply it globally or to specific Hextra content classes */
+body, .content {
+    font-family: 'VT323', monospace; /* Change to 'VT323' for a CRT terminal look */
+    font-style: normal;
+}
