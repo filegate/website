@@ -6,7 +6,7 @@ toc: false
 
 # FidoNet FileGate
 
-Back before the internet was a household thing, there was FidoNet — a scrappy, volunteer-run network connecting thousands of bulletin board systems (BBSs) around the world. People dialed in over phone lines to chat, swap messages, and download files, all stitched together by sysops who kept the whole thing running out of their spare bedrooms and basements.
+Back before the internet was a household thing, there was [FidoNet](http://www.fidonet.org) — a scrappy, volunteer-run network connecting thousands of bulletin board systems (BBSs) around the world. People dialed in over phone lines to chat, swap messages, and download files, all stitched together by sysops who kept the whole thing running out of their spare bedrooms and basements.
 
 {{< img src="filegate-light.jpg" src_dark="filegate-dark.jpg" alt="Sept 2010" float="right" width="350px" >}}
 

@@ -5,7 +5,7 @@ title: 'About'
 ---
 The FidoNet FileGate (often organized as the IFDC FileGate Project) is the file distribution network of the historical Bulletin Board System (BBS) era.
 
-While FidoNet is known for transmitting messages and emails (NetMail and EchoMail), FileGate functioned as the network's counterpart for distributing shareware, freeware, and binary files across thousands of interconnected BBS nodes.
+While [FidoNet](http://www.fidonet.org) is known for transmitting messages and emails (NetMail and EchoMail), FileGate functioned as the network's counterpart for distributing shareware, freeware, and binary files across thousands of interconnected BBS nodes.
 
 Key aspects of the FidoNet FileGate include:
 
