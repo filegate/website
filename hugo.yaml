@@ -55,33 +55,6 @@ params:
       pageSize: 10
 
 menu:
-  sidebar:
-    - name: Fido Links
-      params:
-        type: separator
-      weight: 1
-    - name: "Fidonet ↗"
-      url: "https://www.fidonet.org"
-      weight: 2
-    - name: "Fidonews ↗"
-      url: "https://www.fidonews.site"
-      weight: 3
-    - name: "FTSC ↗"
-      url: "http://ftsc.org"
-      weight: 3
-    - name: "Nodelist ↗"
-      url: "http://nodelist.fidonet.cc"
-      weight: 3
-    - name: "Zone 1 ↗"
-      url: "http://www.darkrealms.ca/"
-      weight: 4
-    - name: "Zone 3 ↗"
-      url: "https://fidonet.au"
-      weight: 4
-    - name: "Zone 4 ↗"
-      url: "https://fido.bbs.docksud.com.ar/"
-      weight: 4
-
   main:
     - name: Search
       weight: 1

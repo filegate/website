@@ -1,6 +1,7 @@
 ---
 date: '2026-07-10T22:27:04+10:00'
 draft: false
+toc: false
 ---
 
 # FidoNet FileGate
