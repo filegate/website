@@ -4,6 +4,6 @@ draft: false
 title: 'Available Filegate Distribution Areas'
 hideLastModified: true
 ---
-The following areas area available
+The following areas are available:
 
 {{< remote_table target="remote-areas-table" apiurl="https://clrghouz.bbs.dege.au/api/filegate/fidonet">}}
