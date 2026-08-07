@@ -1,12 +1,12 @@
-<div id="table-container">
-    <p id="loading-msg">Fetching remote data...</p>
-    <table id="remote-areas-table" style="display: none; width: 100%; border-collapse: collapse;">
+<div id="remote-table">
+    <table id="fileareas">
         <thead>
             <tr>
-                <th>Distribution</th>
+                <th>Filegate</th>
                 <th>Filearea</th>
                 <th>Description</th>
                 <th>Files Count</th>
+                <th>Active</th>
             </tr>
         </thead>
         <tbody id="table-body">
@@ -14,56 +14,57 @@
     </table>
 </div>
 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="http://docker.local/plugin/dataTables/dataTables.conditionalPaging.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/rowgroup/1.1.2/js/dataTables.rowGroup.min.js"></script>
+
 <script>
-document.addEventListener('DOMContentLoaded',function() {
-    //const apiUrl = "http://docker.local/api/filegate/fidonet"; // Replace with your remote API URL
-    const apiUrl = "{{ .Get "apiurl" }}"
-    const target = "{{ .Get "target" }}"
-
-    fetch(apiUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            const tbody = document.getElementById('table-body');
-            tbody.innerHTML = ""; // Clear existing rows
-
-		if (target === 'remote-areas-table') {
-            // Iterate through the remote data (adjust property names to match your API)
-            data.forEach(item => {
-                const row = document.createElement('tr');
-
-                const cell1 = document.createElement('td');
-                cell1.textContent = item.filegate;
-                row.appendChild(cell1);
-
-                const cell2 = document.createElement('td');
-                cell2.textContent = item.area;
-                row.appendChild(cell2);
-
-                const cell3 = document.createElement('td');
-                cell3.textContent = item.description;
-                row.appendChild(cell3);
-
-                const cell4 = document.createElement('td');
-                cell4.style.textAlign = "right";
-                cell4.textContent = item.files;
-                row.appendChild(cell4);
-
-                tbody.appendChild(row);
-            });
-}
-
-            // Hide loading message and show table
-            document.getElementById("loading-msg").style.display = "none";
-            document.getElementById(target).style.display = "table";
-        })
-        .catch(error => {
-            document.getElementById("loading-msg").textContent = "Error loading data.";
-            console.error("Error fetching data:", error);
-        });
+$(document).ready(function() {
+	$('#fileareas').DataTable({
+		ajax: {
+			url: {{ .Get "apiurl" }},
+			dataSrc: '',      // Correctly nested: processes your flat JSON array
+			dataType: 'json'  // Correctly nested: forces JSON parsing evaluation
+		},
+		columns: [
+			{ data: 'filegate' },
+			{ data: 'area' },
+			{ data: 'description' },
+			{
+				data: 'files',
+				className: 'dt-right',
+				render: function(data) {
+					return data.toLocaleString();
+				}
+			},
+			{ data: 'active' },
+		],
+		paging: true,
+		pageLength: 25,
+		searching: true,
+		order: [],
+		conditionalPaging: {
+			style: 'fade',
+			speed: 500
+		},
+		rowGroup: {
+			dataSrc: 'active',
+			startRender: function(rows, group) {
+				return group === 'true' || group === true ? 'Areas Active' : 'Areas no longer active';
+			},
+		},
+		columnDefs: [
+			{ targets: [4], visible: false },
+		],
+		language: {
+			emptyTable: "No file areas found matching your request.",
+			loadingRecords: "Fetching data from server, please wait...",
+			paginate: {
+				previous: '&lt;&lt;',
+				next: '&gt;&gt;'
+			}
+		}
+	});
 });
 </script>

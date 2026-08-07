@@ -9,3 +9,106 @@ body, .content {
 .hextra-max-navbar-width {
 	max-width: inherit;
 }
+
+/* Restore correct table display — Hextra prose sets display:block which breaks DataTables */
+.content #fileareas,
+.content .dataTables_wrapper table {
+	display: table !important;
+}
+
+.dt-right, td.dt-right, th.dt-right {
+	text-align: right !important;
+}
+
+div.dataTables_wrapper div.dataTables_length {
+    float: left;
+}
+
+div.dataTables_wrapper div.dataTables_filter {
+    float: right;
+}
+
+div.dataTables_wrapper::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+div.dataTables_wrapper div.dataTables_length,
+div.dataTables_wrapper div.dataTables_filter {
+    margin-bottom: 1rem;
+}
+
+div.dataTables_wrapper div.dataTables_length label {
+    font-weight: normal;
+    text-align: left;
+    white-space: nowrap
+}
+
+div.dataTables_wrapper div.dataTables_length select {
+    width: auto;
+    display: inline-block;
+
+    border: 1px solid var(--hx-color-gray-600);
+    padding: 2px;
+}
+
+div.dataTables_wrapper div.dataTables_filter {
+    text-align: right
+}
+
+div.dataTables_wrapper div.dataTables_filter label {
+    font-weight: normal;
+    white-space: nowrap;
+    text-align: left
+}
+
+div.dataTables_wrapper div.dataTables_filter input {
+    margin-left: .5em;
+    padding-left: 0.5em;
+    display: inline-block;
+    width: auto;
+    border: 1px solid var(--hx-color-gray-600);
+}
+
+/* Info and pagination on the same line */
+div.dataTables_wrapper div.dataTables_info {
+    float: left;
+    padding-top: 0.5rem;
+}
+
+div.dataTables_wrapper div.dataTables_paginate {
+    float: right;
+    margin: 0;
+    white-space: nowrap;
+    text-align: right;
+}
+
+div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+    margin: 2px 0;
+    white-space: nowrap;
+    justify-content: flex-end;
+}
+
+/* Bordered page number buttons */
+div.dataTables_wrapper div.dataTables_paginate span a,
+div.dataTables_wrapper div.dataTables_paginate a.paginate_button {
+    display: inline-block;
+    padding: 2px 8px;
+    margin: 0 2px;
+    border: 1px solid var(--hx-color-gray-300);
+    border-radius: 3px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+div.dataTables_wrapper div.dataTables_paginate a.paginate_button.current {
+    font-weight: bold;
+    border-color: var(--hx-color-gray-600);
+    background: var(--hx-color-gray-100);
+}
+
+div.dataTables_wrapper div.dataTables_paginate a.paginate_button.disabled {
+    color: var(--hx-color-gray-400);
+    cursor: default;
+}
