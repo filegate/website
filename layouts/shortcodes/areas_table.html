@@ -1,4 +1,5 @@
-<div id="remote-table">
+
+<div id="areas-table">
     <table id="fileareas">
         <thead>
             <tr>
@@ -14,9 +15,17 @@
     </table>
 </div>
 
+<style>
+	#fileareas tbody tr.area-clickable {
+		cursor: pointer;
+	}
+	#fileareas tbody tr.area-clickable:hover {
+		background-color: rgba(0, 0, 0, 0.05);
+	}
+</style>
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="http://docker.local/plugin/dataTables/dataTables.conditionalPaging.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/rowgroup/1.1.2/js/dataTables.rowGroup.min.js"></script>
 
 <script>
@@ -59,6 +68,16 @@ $(document).ready(function() {
 		columnDefs: [
 			{ targets: [4], visible: false },
 		],
+		rowCallback: function(row, data) {
+			// Only make the row clickable/navigable if it has files
+			if (data.files > 0) {
+				$(row).addClass('area-clickable');
+				$(row).attr('data-area', data.area);
+			} else {
+				$(row).removeClass('area-clickable');
+				$(row).removeAttr('data-area');
+			}
+		},
 		language: {
 			emptyTable: "No file areas found matching your request.",
 			loadingRecords: "Fetching data from server, please wait...",
@@ -66,6 +85,14 @@ $(document).ready(function() {
 				previous: '&lt;&lt;',
 				next: '&gt;&gt;'
 			}
+		}
+	});
+
+	// Delegated click handler - works across DataTables redraws/paging
+	$('#fileareas tbody').on('click', 'tr.area-clickable', function() {
+		var areaName = $(this).data('area');
+		if (areaName) {
+			window.location.href = '/areas/area/#' + encodeURIComponent(areaName);
 		}
 	});
 });

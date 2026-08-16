@@ -6,4 +6,4 @@ hideLastModified: true
 ---
 The following areas are available:
 
-{{< remote_table target="remote-areas-table" apiurl="https://clrghouz.bbs.dege.au/api/filegate/fidonet">}}
+{{< areas_table apiurl="https://clrghouz.bbs.dege.au/api/filegate/fidonet">}}

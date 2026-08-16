@@ -1,0 +1,135 @@
+<div id="files-table-wrapper">
+    <h2 id="area-heading">Loading area&hellip;</h2>
+
+    <table id="fileslist" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Filename</th>
+                <th>Date</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<style>
+	#area-heading {
+		padding-bottom: 1em;
+	}
+	#fileslist td.ldesc-cell {
+		font-family: 'Courier New', Courier, monospace;
+		white-space: pre-wrap;
+	}
+</style>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+<script>
+$(document).ready(function() {
+	// Base API endpoint comes from the shortcode param, e.g.
+	var baseApiUrl = {{ .Get "apiurl" }};
+
+	// The area name lives in the URL hash (e.g. /areas/area/#somearea)
+	// rather than a Hugo-routed path segment, since Hugo only builds
+	// this one static page - the hash is resolved client-side.
+	function getAreaFromHash() {
+		var raw = window.location.hash.replace(/^#/, '');
+		return raw ? decodeURIComponent(raw) : null;
+	}
+
+	var areaName = getAreaFromHash();
+
+	if (!areaName) {
+		$('#area-heading').text('No area specified.');
+		$('#fileslist').hide();
+		return;
+	}
+
+	$('#area-heading').text('Files in: ' + areaName);
+
+	// Build the full ajax URL. Adjust this to match how your API
+	// expects the area name - as a path segment or a query param.
+	var ajaxUrl = baseApiUrl + '/' + encodeURIComponent(areaName);
+	// e.g. if your API instead expects a query string:
+	// var ajaxUrl = baseApiUrl + '?area=' + encodeURIComponent(areaName);
+
+	var table = $('#fileslist').DataTable({
+		ajax: {
+			url: ajaxUrl,
+			// The API returns a single object like:
+			// { domain, filegate, area, files: [ {name, datetime, size, ldesc}, ... ] }
+			// so the rows we want live at the "files" key, not the root.
+			dataSrc: function(json) {
+				// Use the server-confirmed area name/filegate for the heading,
+				// in case it differs in casing/formatting from the hash.
+				if (json.area) {
+					$('#area-heading').html('Filegate: '+ (json.filegate ? json.filegate : '')+'<br>');
+					$('#area-heading').append('Area: ' + json.area +'<br>');
+				}
+				return json.files || [];
+			},
+			dataType: 'json',
+			error: function() {
+				$('#area-heading').text('Could not load files for: ' + areaName);
+			}
+		},
+		columns: [
+			{ data: 'name' },
+			{
+				data: 'datetime',
+				render: function(data, type) {
+					if (!data) { return ''; }
+					// For sorting/filtering/type-detection, hand back the raw
+					// value (or a timestamp) so DataTables sorts chronologically
+					// instead of alphabetically on the formatted display string.
+					if (type !== 'display') {
+						var d = new Date(data.replace(' ', 'T'));
+						return isNaN(d.getTime()) ? data : d.getTime();
+					}
+					var d = new Date(data.replace(' ', 'T'));
+					if (isNaN(d.getTime())) { return data; }
+					return d.toLocaleDateString();
+				}
+			},
+			{
+				data: 'ldesc',
+				className: 'ldesc-cell',
+				render: function(data) {
+					if (!data) { return ''; }
+					// Preserve line breaks in the long description, and
+					// escape any HTML in it first so it can't inject markup.
+					var escaped = $('<div>').text(data).html();
+					return escaped.replace(/\r\n|\r|\n/g, '<br>');
+				}
+			},
+		],
+		paging: true,
+		pageLength: 25,
+		searching: true,
+		order: [[1, 'desc']],
+		language: {
+			emptyTable: "No files found in this area.",
+			loadingRecords: "Fetching files from server, please wait...",
+			paginate: {
+				previous: '&lt;&lt;',
+				next: '&gt;&gt;'
+			}
+		}
+	});
+
+	// If the hash changes (e.g. user navigates via browser back/forward
+	// between two #area links without a full page reload), reload the
+	// table against the new area instead of leaving stale data showing.
+	$(window).on('hashchange', function() {
+		var newArea = getAreaFromHash();
+		if (!newArea) { return; }
+		areaName = newArea;
+		$('#area-heading').text('Files in: ' + areaName);
+		var newUrl = baseApiUrl + '/' + encodeURIComponent(areaName);
+		table.ajax.url(newUrl).load();
+	});
+});
+</script>
