@@ -6,6 +6,7 @@
             <tr>
                 <th>Filename</th>
                 <th>Date</th>
+                <th>Size</th>
                 <th>Description</th>
             </tr>
         </thead>
@@ -94,6 +95,13 @@ $(document).ready(function() {
 					return d.toLocaleDateString();
 				}
 			},
+			{
+                                data: 'size',
+                                className: 'dt-right',
+                                render: function(data) {
+                                        return data.toLocaleString();
+                                }
+                        },
 			{
 				data: 'ldesc',
 				className: 'ldesc-cell',
